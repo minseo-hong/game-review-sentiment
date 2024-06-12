@@ -16,7 +16,11 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 origins = [
+    "https://localhost:5173",
     "http://localhost:5173",
+    "https://https://game-review-sentiment-server.com",
+    "http://localhost:8000",
+    "https://localhost:8000"
 ]
 
 app.add_middleware(
