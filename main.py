@@ -7,7 +7,7 @@ from ai import predict_sentiment
 from database import Base, engine, SessionLocal
 from models import Review as ReviewModel
 from typing import Optional
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 
@@ -16,11 +16,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 origins = [
-    "https://localhost:5173",
-    "http://localhost:5173",
-    "https://https://game-review-sentiment-server.com",
-    "http://localhost:8000",
-    "https://localhost:8000"
+    "http://127.0.0.1:5173",
 ]
 
 app.add_middleware(
