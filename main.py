@@ -8,6 +8,8 @@ from database import Base, engine, SessionLocal
 from models import Review as ReviewModel
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import FileResponse
+from starlette.staticfiles import StaticFiles
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,6 +26,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/assets", StaticFiles(directory="frontend/dist/assets"))
 
 translator = Translator()
 
@@ -64,6 +68,10 @@ class ReviewMetrics(BaseModel):
   negative: int
   positivePercent: float
   negativePercent: float
+
+@app.get("/")
+def index():
+  return FileResponse("frontend/dist/index.html")
 
 @app.get("/reviews/", response_model=list[Review])
 def get_reviews(db: Session = Depends(get_db)):
